@@ -1,26 +1,25 @@
 # -*- coding: utf-8 -*-
 """
 Created on Thu Feb 19 15:58:18 2026
-
+ 
 @author: BusRmutt
 """
-
+ 
 import pickle
 from streamlit_option_menu import option_menu
 import streamlit as st
-
+ 
 used_car_model = pickle.load(open('Used_cars_model.sav','rb'))
 riding_model = pickle.load(open('RidingMowers_model.sav','rb'))
-bim_model = pickle.load(open('bmi_model.sav','rb'))
-
-
-
+bmi_model = pickle.load(open('bmi_model.sav','rb'))
+ 
+ 
 fuel_map = {
     'Diesel': 0,
     'Electric': 1,
     'Petrol': 2
 }
-
+ 
 engine_map = {
     '800': 0,
     '1000': 1,
@@ -33,7 +32,7 @@ engine_map = {
     '4000': 8,
     '5000': 9
 }
-
+ 
 brand_map = {
     'BMW': 0,
     'Chevrolet': 1,
@@ -46,35 +45,14 @@ brand_map = {
     'Toyota': 8,
     'Volkswagen': 9
 }
-
+ 
 transmission_map = {
     'Automatic': 0,
     'Manual': 1
 }
 with st.sidebar:
     selected = option_menu('Prediction',
-                           ['Ridingmower','Used_cars','bmi'])
-
-
-if selected== 'Ridingmower':
-    st.title('Riding Mower Classification')
-    
-    Income = st.text_input('Income')
-    LotSize = st.text_input('LotSize')
-    Riding_prediction = ''
-    if st.button('Predict'):
-        Riding_prediction = riding_model.predict([[
-            float(Income),
-            float(LotSize)
-            ]])
-        if Riding_prediction[0]==1:
-            Riding_prediction = 'Owner'
-        else:
-            Riding_prediction = 'Non Owner'
-    st.success(Riding_prediction)
-
-
-
+                           ['Ridingmower','Used_cars','BMI'])
 if selected== 'BMI':
     st.title('BMI Classification')
     Gender = st.text_input('Gender')
@@ -92,8 +70,21 @@ if selected== 'BMI':
         else:
             BMI_prediction = 'Non Owner'
     st.success(BMI_prediction)
-
-    
+if selected== 'Ridingmower':
+    st.title('Riding Mower Classification')
+    Income = st.text_input('Income')
+    LotSize = st.text_input('LotSize')
+    Riding_prediction = ''
+    if st.button('Predict'):
+        Riding_prediction = riding_model.predict([[
+            float(Income),
+            float(LotSize)
+            ]])
+        if Riding_prediction[0]==1:
+            Riding_prediction = 'Owner'
+        else:
+            Riding_prediction = 'Non Owner'
+    st.success(Riding_prediction)
 if selected == 'Used_cars':
     st.title('ประเมินราคารถมือ 2')
     make_year = st.text_input('ปีที่ผลิต')
@@ -117,7 +108,6 @@ if selected == 'Used_cars':
             float(accidents_reported)
             ]])
         Price_predict = round(Price_predict[0],2)
-
+ 
     st.success(Price_predict)
-
-
+ 
