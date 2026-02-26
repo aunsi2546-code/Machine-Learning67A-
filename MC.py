@@ -93,7 +93,6 @@ if selected== 'BMI':
             BMI_prediction = 'Non Owner'
     st.success(BMI_prediction)
 
-
     
 if selected == 'Used_cars':
     st.title('ประเมินราคารถมือ 2')
